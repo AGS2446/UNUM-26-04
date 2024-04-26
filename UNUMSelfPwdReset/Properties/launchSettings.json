@@ -1,0 +1,32 @@
+﻿{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:21007",
+      "sslPort": 44376
+    }
+  },
+  "profiles": {
+    "UNUMSelfPwdReset": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7064;http://localhost:5147",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ADMIN_USERNAME": "ram@adventglobal.com",
+        "ADMIN_PWD": "PRisq763",
+        "CLIENT_SECRET": "Hj78Q~UeSjwpms45ty5kqd0kX4zH~9K_LWJX2c0L",
+        "CLIENT_ID": "35541b8b-923b-4015-b104-aa97c98e9638"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

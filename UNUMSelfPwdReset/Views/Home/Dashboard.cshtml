@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model UserProfileViewModel
+<div class="row mt-5">
+
+    <div class="alert alert-tra">
+
+
+        <span class="float-start h-img">
+            <svg fill="#19557f" width="40" class="h-svg" font-weight="600" height="40" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M800 384h-32V261.872C768 115.024 661.744 0 510.816 0 359.28 0 256 117.472 256 261.872V384h-32c-70.592 0-128 57.408-128 128v384c0 70.592 57.408 128 128 128h576c70.592 0 128-57.408 128-128V512c0-70.592-57.408-128-128-128zM320 261.872C320 152.784 394.56 64 510.816 64 625.872 64 704 150.912 704 261.872V384H320V261.872zM864.001 896c0 35.28-28.72 64-64 64h-576c-35.28 0-64-28.72-64-64V512c0-35.28 28.72-64 64-64h576c35.28 0 64 28.72 64 64v384zm-352-320c-35.344 0-64 28.656-64 64 0 23.632 12.96 44.032 32 55.12V800c0 17.664 14.336 32 32 32s32-14.336 32-32V695.12c19.04-11.088 32-31.504 32-55.12 0-35.344-28.656-64-64-64z" /></svg>
+        </span>
+
+        <div class="hrl">
+            <strong style="font:xx-large" class="float-start f-24">Self Service Password Reset</strong>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a class="float-end mt-3 fs-15" asp-area="MicrosoftIdentity" style="border:none;color:#015294" asp-controller="Account" asp-action="SignOut">
+                    <i class="fa fa-sign-out pr-5" aria-hidden="true"></i> Sign out
+                </a>
+            }
+            else
+            {
+                <a class="float-end mt-3 fs-15" asp-area="MicrosoftIdentity" style="border:none;color:#015294" asp-controller="Account" asp-action="SignIn">
+                    <i class="fa fa-sign-in pr-5" aria-hidden="true"></i> Sign in
+                </a>
+            }
+        </div>
+    </div>
+
+</div>
+<div class="cont">
+    <div class="row">
+        <div class="res">
+            @if (Model.LoginClients[0].ExpireInDays > 14)
+            {
+                <div class="alert alert-secondary col-md-12">
+                    <div class="ts-h col-md-8 float-start">
+                        <div class="ts float-start">
+                            <svg class="svg-primary" xmlns="http://www.w3.org/2000/svg" height="2.5rem" viewBox="0 0 24 24" width="2.5rem" fill="#00428c">
+                                <path d="M0 0h24v24H0z" fill="none">
+
+                                </path>
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                            </svg>
+                        </div>
+
+                        <div class="m-s">
+                            <strong>Your</strong>
+
+                            <b> LAN ID </b> <strong>will <b>expire</b> on </strong>
+
+                            <b>@DateTime.Now.AddDays(Convert.ToDouble(Model.LoginClients[0].ExpireInDays)).DayOfWeek, @DateTime.Now.AddDays(Convert.ToDouble(Model.LoginClients[0].ExpireInDays)).ToString("MMMM dd, yyyy")</b>
+                        </div>
+                    </div>
+                    <div class="col-md-4 float-end">
+                        <a class="btn btn-bl label-btn   ma-7 float-end change" data-bs-target="#mdlchangepassword" style="padding:4px 10px;" data-bs-toggle="modal" href="javascript:void(0)">
+                           <span> <i class="fa fa-key me-2 t-r"></i></span><span>Change your password now</span>
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning col-md-12">
+                    <div class="ts-h col-md-8 float-start">
+                        <div class="tsg float-start">
+                            <svg class="svg-warning" xmlns="http://www.w3.org/2000/svg" height="2.5rem" viewBox="0 0 24 24" width="2.5rem" fill="#eb6d00">
+                                <path d="M0 0h24v24H0z" fill="none">
+
+                                </path>
+                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z">
+
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="m-s">
+                            @if (Model.LoginClients[0].ExpireInDays <= 14 && Model.LoginClients[0].ExpireInDays > 0)
+                            {
+                                <strong>Your LAN ID is going to <b>expire</b> on </strong>
+
+                                <b>@DateTime.Now.AddDays(Convert.ToDouble(Model.LoginClients[0].ExpireInDays)).DayOfWeek, @DateTime.Now.AddDays(Convert.ToDouble(Model.LoginClients[0].ExpireInDays)).ToString("MMMM dd, yyyy"),</b>
+
+                                <strong> please change your password without any interruption. </strong>
+                            }
+                            else if (Model.LoginClients[0].ExpireInDays <= 0)
+                            {
+                                <div class="mt-2">
+                                <strong>Your LAN ID has</strong>
+
+                                <b> expired.</b> <strong> Please click on change password now. </strong>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4 float-end">
+                        <a class="btn btn-warning m-t-3  ma-7 float-end change" data-bs-target="#mdlchangepassword" style="padding: 6px 8px;" data-bs-toggle="modal" href="javascript:void(0)">
+                            <span> <i class="fa fa-key me-2 t-r"></i></span><span>Change your password now</span>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row mt-6">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xl-3">
+                    <a asp-controller="Home" asp-action="Index">
+                        <div class="card overflow-hidden">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="mt-2">
+                                        <span>
+
+                                        </span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <div class="chart-wrapper mt-1">
+                                            <div class="h-8 w-9 chart-dropshadow t-r">
+                                                <i class="fa fa-user i-c fs-30" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="st fs-18">
+                                    My Accounts
+                                </h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#global-loader").hide();
+        });
+    </script>
+}
